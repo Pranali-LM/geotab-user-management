@@ -6,8 +6,46 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (!window.location.href.includes("localhost"))
+      geotab.addin.UserManagement = (api, state) => {
+        console.log("variabe assignemend");
+        console.log(document.getElementById("root"));
+
+        const storeAssetInfo = async () => {
+          const url = await state.page.get();
+          localStorage.setItem("url", JSON.stringify(url));
+          localStorage.setItem("urlId", url.id);
+        };
+        
+        window.dispatchEvent(
+          new CustomEvent("geoTabLoaded", { detail: { api: api } })
+        );
+
+        const onFocus = () => {
+          storeAssetInfo();
+          console.log("UserManagement focus");
+
+          console.log(document.getElementById("root"));
+        };
+
+        storeAssetInfo();
+        const onBlur = () => {
+          console.log("UserManagement blur");
+        };
+
+        const onStateChange = () => {
+          console.log("UserManagement stateChange");
+        };
+        // state.page.attach("initialize", () => console.log("init"));
+        state.page.attach("focus", onFocus);
+        state.page.attach("blur", onBlur);
+        state.page.attach("stateChange", onStateChange);
+      };
+  </script>
 </head>
-<body>
+<body class="mat-typography">
   <app-root></app-root>
 </body>
 </html>

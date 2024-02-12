@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GeotabApiService } from './geotab-api.service';
+import { LmApiService } from './lm-api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,24 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'geotab-addin';
+
+  constructor(  private geotabAPI: GeotabApiService,
+    private lmService: LmApiService){}
+    ngOnInit(){
+      this.geotabAPI
+      .authenticateGeoTabUser()
+      .subscribe({
+        next: (resp: any) => {
+          const geoTabSessionId = resp['result'].credentials.sessionId;
+          this.geotabAPI.updateGeoTabSessionId(geoTabSessionId);
+          console.log(geoTabSessionId);
+          this.lmService.getAuthenticationToken('lmpresales', geoTabSessionId);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      })
+      .add();
+  }
 }
+
