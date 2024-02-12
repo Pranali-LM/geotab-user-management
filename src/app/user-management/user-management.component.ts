@@ -17,6 +17,7 @@ export class UserManagementComponent implements OnInit {
   roles: any[] = [];
   selectedRoleControl = new FormControl();
   roleId : any 
+  geotabUserId : any 
   selectedTags = new FormControl();
   tags = ["South"]; 
   constructor(  private geotabAPI: GeotabApiService,
@@ -28,6 +29,7 @@ export class UserManagementComponent implements OnInit {
         console.log('Selected User Data:', resp);
         this.email = resp.result[0].name
         this.name = resp.result[0].firstName +" " + resp.result[0].lastName
+        this.geotabUserId=resp.result[0].id 
       },
       error: (error: any) => {
         console.error('Error fetching selected user:', error);
@@ -63,7 +65,7 @@ export class UserManagementComponent implements OnInit {
     console.log('Email:', this.email);
     console.log('Role:', this.selectedRoleControl.value);
     console.log('Tags:', this.selectedTags.value);
-    this.geotabAPI.addInData(this.selectedRoleControl.value , this.selectedTags.value).subscribe({
+    this.geotabAPI.addInData(this.selectedRoleControl.value , this.selectedTags.value , this.geotabUserId).subscribe({
       next:(resp:any) => {
         console.log(resp);
       },

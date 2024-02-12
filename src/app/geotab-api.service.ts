@@ -12,7 +12,6 @@ export class GeotabApiService {
 
   geoTabSessionId = this.geoTabSessionIdSource.asObservable();
  
-  
   updateGeoTabSessionId(val: string) {
     console.warn(val);
     this.geoTabSessionIdSource.next(val);
@@ -49,13 +48,13 @@ export class GeotabApiService {
         credentials: {
           database: 'lmfleet003',
           userName: 'pranali.udawant@lightmetrics.co',
-          sessionId : "0JOSOVv9gr5vKzp1_AhNVA"
+          sessionId : "L8cMRYfo1kZEV1fbIjYOjQ"
         },
       },
     };
     return this.httpClient.post('https://my.geotab.com/apiv1', requestBody);
 }
-public addInData(selectedRole: string , selectedTag : string): Observable<any> {
+public addInData(selectedRole: string , selectedTag : string , geotabUserId:any): Observable<any> {
   const requestBody = {
     method :"Add",
     params :{
@@ -63,12 +62,12 @@ public addInData(selectedRole: string , selectedTag : string): Observable<any> {
       credentials: {
         database: 'lmfleet003',
         userName: 'pranali.udawant@lightmetrics.co',
-        sessionId : "6ecMh1d3HoFEcoVaJDmfrA"
+        sessionId : "L8cMRYfo1kZEV1fbIjYOjQ"
       },
       entity: {
         addInId: "aTRmZTJlNmYtOGYxYy0zOTh",
         details: {
-          userId: "b37",
+          userId: geotabUserId,
           userName: 'pranali.udawant@lightmetrics.co',
           roleId: selectedRole ,
           tags : selectedTag ,
@@ -91,7 +90,7 @@ public getData(): Observable<any> {
       credentials: {
         database: 'lmfleet003',
         userName: 'pranali.udawant@lightmetrics.co',
-        sessionId : "0JOSOVv9gr5vKzp1_AhNVA"
+        sessionId : "L8cMRYfo1kZEV1fbIjYOjQ"
       },
       search: {
         addInId: "aTRmZTJlNmYtOGYxYy0zOTh",
